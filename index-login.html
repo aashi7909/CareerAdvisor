@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARRIER ADVISOR - Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <div class="modal-container">
+        <button class="close-btn"></button>
+        
+        <div class="left-section">
+            <div class="logo"><b>Edupath</b></div>
+            
+            <div class="character-container">
+                <div class="character">
+                    <div class="head"></div>
+                    <div class="vr-headset">
+                        <div class="vr-lens left"></div>
+                        <div class="vr-lens right"></div>
+                    </div>
+                    <div class="vr-strap left"></div>
+                    <div class="vr-strap right"></div>
+                    <div class="body"></div>
+                    <div class="arm left"></div>
+                    <div class="arm right"></div>
+                    <div class="hand"></div>
+                </div>
+                
+                <div class="chart">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                
+                <div class="progress-bar progress-1">
+                    <div class="progress-fill"></div>
+                </div>
+                <div class="progress-bar progress-2">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+            
+            <div class="floating-elements">
+                <div class="bubble bubble-1"></div>
+                <div class="bubble bubble-2"></div>
+                <div class="bubble bubble-3"></div>
+                <div class="bubble bubble-4"></div>
+            </div>
+        </div>
+
+        <div class="right-section">
+            <h1 class="login-title">Login</h1>
+            
+            <div class="form-group">
+                <label class="form-label">USERNAME/MOBILE</label>
+                <div class="input-container">
+                    <input type="text" class="form-input" placeholder="Enter username or mobile">
+                    <span class="input-icon">✉</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">PASSWORD</label>
+                <div class="input-container">
+                    <input type="password" class="form-input" placeholder="Enter your password">
+                    <span class="input-icon">👁</span>
+                </div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button class="login-btn">Log In</button>
+
+            <div class="divider">
+                <span>Or Continue With</span>
+            </div>
+
+            <div class="social-buttons">
+                <button class="social-btn">
+                    <div class="google-icon"></div>
+                </button>
+                <button class="social-btn">
+                    <div class="facebook-icon"></div>
+                </button>
+                <button class="social-btn">
+                    <div class="apple-icon"></div>
+                </button>
+            </div>
+
+            <div class="signup-text">
+                Don't have an account? <a href="#">Sign Up here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.querySelector('input[type="password"]');
+            const eyeIcon = passwordInput.nextElementSibling;
+            
+            eyeIcon.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeIcon.textContent = '🙈';
+                } else {
+                    passwordInput.type = 'password';
+                    eyeIcon.textContent = '👁';
+                }
+            });
+
+            // Form validation
+            const loginBtn = document.querySelector('.login-btn');
+            const inputs = document.querySelectorAll('.form-input');
+            
+            loginBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                let isValid = true;
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        input.style.borderColor = '#ff6b6b';
+                        isValid = false;
+                    } else {
+                        input.style.borderColor = '#e1e8ed';
+                    }
+                });
+                
+                if (isValid) {
+                    alert('Login functionality would be implemented here!');
+                }
+            });
+
+            // Close button functionality
+            document.querySelector('.close-btn').addEventListener('click', function() {
+                alert('Close functionality would be implemented here!');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPath - Your Personalized Career Roadmap</title>
+     <link rel="stylesheet" href="student_profile.css">
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <span>📚</span>
+                EduPath
+            </div>
+            <a href="#" class="back-btn" onclick="goBack()">← Back to Form</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="summary-header">
+                <h1 class="welcome-title" id="welcomeTitle">Welcome, Student!</h1>
+                <p class="welcome-subtitle">Here's your personalized career roadmap based on your profile</p>
+            </div>
+
+            <!-- Student Summary Section -->
+            <div class="student-summary">
+                <h2 class="summary-title">
+                    <span>📋</span>
+                    Your Profile Summary
+                </h2>
+                <div class="student-details" id="studentDetails">
+                    <!-- Profile details will be populated here -->
+                </div>
+            </div>
+
+            <!-- College Recommendations Section -->
+            <div class="recommendations-section">
+                <h2 class="section-title">
+                    <span>🎓</span>
+                    College Recommendations for You
+                </h2>
+
+                <!-- Filters -->
+                <div class="filter-section">
+                    <div class="filter-group">
+                        <label class="filter-label">College Type</label>
+                        <select class="filter-select" id="collegeTypeFilter">
+                            <option value="all">All Colleges</option>
+                            <option value="government">Government</option>
+                            <option value="private">Private</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Sort By</label>
+                        <select class="filter-select" id="sortFilter">
+                            <option value="match">Best Match</option>
+                            <option value="fees">Fees (Low to High)</option>
+                            <option value="ranking">Ranking</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label class="filter-label">Location</label>
+                        <select class="filter-select" id="locationFilter">
+                            <option value="all">All Locations</option>
+                            <option value="local">Local (Same State)</option>
+                            <option value="nearby">Nearby States</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="loading" id="loadingColleges">
+                    <div class="spinner"></div>
+                    <p>Finding best colleges for you...</p>
+                </div>
+
+                <div class="college-grid" id="collegeGrid">
+                    <!-- Colleges will be populated here -->
+                </div>
+            </div>
+
+            <!-- Guidance Section -->
+            <div class="guidance-section">
+                <h2 class="section-title">
+                    <span>💡</span>
+                    Personalized Guidance
+                </h2>
+                <div class="guidance-cards" id="guidanceCards">
+                    <!-- Guidance will be populated here -->
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn" onclick="downloadReport()">
+                    <span>📄</span>
+                    Download Report
+                </button>
+                <button class="action-btn secondary" onclick="scheduleCall()">
+                    <span>📞</span>
+                    Schedule Counseling Call
+                </button>
+                <button class="action-btn" onclick="exploreMore()">
+                    <span>🔍</span>
+                    Explore More Options
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Sample student data (in real app, this would come from the form)
+        let studentData = {
+            firstName: "Rahul",
+            lastName: "Kumar",
+            email: "rahul.kumar@email.com",
+            phone: "+91 9876543210",
+            age: 18,
+            education: "12th",
+            stream: "science-pcm",
+            marks: 85,
+            careerGoal: "engineer",
+            collegeType: "both",
+            location: "Delhi",
+            budget: "5-10lakh"
+        };
+
+        // College database
+        const colleges = [
+            {
+                name: "Delhi Technological University",
+                type: "government",
+                location: "Delhi",
+                fees: "1.5 Lakh",
+                cutoff: 80,
+                ranking: 1,
+                courses: ["Computer Science", "Electrical", "Mechanical"],
+                match: 95
+            },
+            {
+                name: "Netaji Subhas University of Technology",
+                type: "government",
+                location: "Delhi",
+                fees: "1.2 Lakh",
+                cutoff: 78,
+                ranking: 2,
+                courses: ["IT", "Electronics", "Civil"],
+                match: 92
+            },
+            {
+                name: "Amity University",
+                type: "private",
+                location: "Noida",
+                fees: "8.5 Lakh",
+                cutoff: 70,
+                ranking: 3,
+                courses: ["Computer Science", "IT", "Biotechnology"],
+                match: 88
+            },
+            {
+                name: "SRM Institute of Science and Technology",
+                type: "private",
+                location: "Chennai",
+                fees: "9.2 Lakh",
+                cutoff: 75,
+                ranking: 4,
+                courses: ["Computer Science", "Aerospace", "Mechanical"],
+                match: 85
+            },
+            {
+                name: "Manipal Institute of Technology",
+                type: "private",
+                location: "Karnataka",
+                fees: "12.5 Lakh",
+                cutoff: 82,
+                ranking: 5,
+                courses: ["Computer Science", "Electronics", "Chemical"],
+                match: 90
+            },
+            {
+                name: "BITS Pilani",
+                type: "private",
+                location: "Rajasthan",
+                fees: "15.2 Lakh",
+                cutoff: 90,
+                ranking: 6,
+                courses: ["Computer Science", "Electrical", "Mechanical"],
+                match: 78
+            }
+        ];
+
+        // Initialize the page
+        function initializePage() {
+            // Try to get data from localStorage or URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('name')) {
+                studentData.firstName = urlParams.get('name') || 'Student';
+                studentData.marks = parseInt(urlParams.get('marks')) || 85;
+                studentData.stream = urlParams.get('stream') || 'science-pcm';
+                studentData.careerGoal = urlParams.get('career') || 'engineer';
+            }
+
+            displayStudentSummary();
+            displayCollegeRecommendations();
+            displayGuidance();
+        }
+
+        function displayStudentSummary() {
+            document.getElementById('welcomeTitle').textContent = `Welcome, ${studentData.firstName}!`;
+            
+            const detailsContainer = document.getElementById('studentDetails');
+            detailsContainer.innerHTML = `
+                <div class="detail-card">
+                    <div class="detail-label">Full Name</div>
+                    <div class="detail-value">${studentData.firstName} ${studentData.lastName}</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Education Level</div>
+                    <div class="detail-value">${getEducationDisplay(studentData.education)}</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Stream</div>
+                    <div class="detail-value">${getStreamDisplay(studentData.stream)}</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Marks/Percentage</div>
+                    <div class="detail-value">${studentData.marks}%</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Career Goal</div>
+                    <div class="detail-value">${getCareerDisplay(studentData.careerGoal)}</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Preferred Location</div>
+                    <div class="detail-value">${studentData.location}</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">Budget Range</div>
+                    <div class="detail-value">${getBudgetDisplay(studentData.budget)}</div>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-label">College Preference</div>
+                    <div class="detail-value">${getCollegeTypeDisplay(studentData.collegeType)}</div>
+                </div>
+            `;
+        }
+
+        function displayCollegeRecommendations() {
+            const collegeGrid = document.getElementById('collegeGrid');
+            const loadingElement = document.getElementById('loadingColleges');
+            
+            // Show loading
+            loadingElement.style.display = 'block';
+            collegeGrid.style.display = 'none';
+            
+            setTimeout(() => {
+                loadingElement.style.display = 'none';
+                collegeGrid.style.display = 'grid';
+                
+                const filteredColleges = filterAndSortColleges();
+                
+                collegeGrid.innerHTML = filteredColleges.map(college => `
+                    <div class="college-card">
+                        <div class="college-badge ${college.type}">${college.type.toUpperCase()}</div>
+                        <div class="college-name">${college.name}</div>
+                        <div class="college-details">
+                            <div class="college-detail">
+                                <span class="college-detail-icon">📍</span>
+                                <span>${college.location}</span>
+                            </div>
+                            <div class="college-detail">
+                                <span class="college-detail-icon">💰</span>
+                                <span>₹${college.fees}</span>
+                            </div>
+                            <div class="college-detail">
+                                <span class="college-detail-icon">📊</span>
+                                <span>Cutoff: ${college.cutoff}%</span>
+                            </div>
+                            <div class="college-detail">
+                                <span class="college-detail-icon">🎓</span>
+                                <span>${college.courses.slice(0, 2).join(', ')}</span>
+                            </div>
+                        </div>
+                        <div class="match-percentage">${college.match}% Match</div>
+                        <div class="eligibility-status ${getEligibilityClass(studentData.marks, college.cutoff)}">
+                            ${getEligibilityText(studentData.marks, college.cutoff)}
+                        </div>
+                    </div>
+                `).join('');
+            }, 1500);
+        }
+
+        function filterAndSortColleges() {
+            let filtered = colleges.filter(college => {
+                const typeFilter = document.getElementById('collegeTypeFilter').value;
+                if (typeFilter !== 'all' && college.type !== typeFilter) return false;
+                
+                return true;
+            });
+
+            const sortBy = document.getElementById('sortFilter').value;
+            filtered.sort((a, b) => {
+                switch(sortBy) {
+                    case 'match':
+                        return b.match - a.match;
+                    case 'fees':
+                        return parseFloat(a.fees) - parseFloat(b.fees);
+                    case 'ranking':
+                        return a.ranking - b.ranking;
+                    default:
+                        return b.match - a.match;
+                }
+            });
+
+            return filtered;
+        }
+
+        function displayGuidance() {
+            const guidanceContainer = document.getElementById('guidanceCards');
+            const guidance = generatePersonalizedGuidance();
+            
+            guidanceContainer.innerHTML = guidance.map(item => `
+                <div class="guidance-card">
+                    <h4>${item.title}</h4>
+                    <p>${item.content}</p>
+                </div>
+            `).join('');
+        }
+
+        function generatePersonalizedGuidance() {
+            const guidance = [];
+            
+            if (studentData.marks >= 85) {
+                guidance.push({
+                    title: "🎯 Excellent Performance!",
+                    content: "With ${studentData.marks}% marks, you're eligible for top government colleges. Focus on JEE Main preparation for IITs and NITs."
+                });
+            } else if (studentData.marks >= 75) {
+                guidance.push({
+                    title: "👍 Good Performance",
+                    content: "Your marks qualify you for good state government colleges and reputed private institutions. Consider both options."
+                });
+            } else {
+                guidance.push({
+                    title: "💪 Room for Improvement",
+                    content: "Focus on improving your grades. Private colleges and state quota seats are good options. Consider supplementary exams if available."
+                });
+            }
+
+            if (studentData.stream === 'science-pcm' && studentData.careerGoal === 'engineer') {
+                guidance.push({
+                    title: "🔧 Engineering Path",
+                    content: "Perfect match! Prepare for JEE Main, state CETs, and private university entrance exams. Computer Science and IT are high-demand fields."
+                });
+            }
+
+            if (studentData.budget === '0-2lakh' || studentData.budget === '2-5lakh') {
+                guidance.push({
+                    title: "💡 Budget-Friendly Options",
+                    content: "Focus on government colleges and state universities. Look for scholarships and education loans for private colleges."
+                });
+            }
+
+            guidance.push({
+                title: "📅 Important Dates",
+                content: "Start preparing for entrance exams now. Most applications open in March-April. Keep track of admission deadlines."
+            });
+
+            return guidance;
+        }
+
+        // Utility functions
+        function getEducationDisplay(education) {
+            const educationMap = {
+                '10th': '10th Class Completed',
+                '12th': '12th Class Completed',
+                'diploma': 'Diploma Completed',
+                'graduation': 'Graduation Completed'
+            };
+            return educationMap[education] || education;
+        }
+
+        function getStreamDisplay(stream) {
+            const streamMap = {
+                'science-pcm': 'Science (PCM)',
+                'science-pcb': 'Science (PCB)',
+                'commerce': 'Commerce',
+                'arts': 'Arts/Humanities'
+            };
+            return streamMap[stream] || stream;
+        }
+
+        function getCareerDisplay(career) {
+            const careerMap = {
+                'engineer': 'Engineer',
+                'doctor': 'Doctor',
+                'ca': 'Chartered Accountant',
+                'lawyer': 'Lawyer',
+                'teacher': 'Teacher',
+                'business': 'Business Owner',
+                'government': 'Government Officer',
+                'not-sure': 'Exploring Options'
+            };
+            return careerMap[career] || career;
+        }
+
+        function getBudgetDisplay(budget) {
+            const budgetMap = {
+                '0-2lakh': 'Up to ₹2 Lakh',
+                '2-5lakh': '₹2 - ₹5 Lakh',
+                '5-10lakh': '₹5 - ₹10 Lakh',
+                '10-20lakh': '₹10 - ₹20 Lakh',
+                '20lakh+': 'Above ₹20 Lakh'
+            };
+            return budgetMap[budget] || budget;
+        }
+
+        function getCollegeTypeDisplay(type) {
+            const typeMap = {
+                'government': 'Government College',
+                'private': 'Private College',
+                'both': 'Both Government & Private',
+                'unsure': 'Need Guidance'
+            };
+            return typeMap[type] || type;
+        }
+
+        function getEligibilityClass(studentMarks, cutoff) {
+            if (studentMarks >= cutoff + 5) return 'eligible';
+            if (studentMarks >= cutoff - 2) return 'borderline';
+            return 'not-eligible';
+        }
+
+        function getEligibilityText(studentMarks, cutoff) {
+            if (studentMarks >= cutoff + 5) return '✅ Highly Eligible';
+            if (studentMarks >= cutoff - 2) return '⚠️ Borderline';
+            return '❌ Below Cutoff';
+        }
+
+        // Action functions
+        function downloadReport() {
+            alert('Generating your personalized career report... This feature will be available soon!');
+        }
+
+        function scheduleCall() {
+            alert('Redirecting to counseling booking... This feature will be available soon!');
+        }
+
+        function exploreMore() {
+            alert('Exploring more colleges and options... This feature will be available soon!');
+        }
+
+        function goBack() {
+            if (confirm('Are you sure you want to go back? Your current data will be preserved.')) {
+                window.history.back();
+            }
+        }
+
+        // Filter event listeners
+        document.getElementById('collegeTypeFilter').addEventListener('change', displayCollegeRecommendations);
+        document.getElementById('sortFilter').addEventListener('change', displayCollegeRecommendations);
+        document.getElementById('locationFilter').addEventListener('change', displayCollegeRecommendations);
+
+        // Initialize page when loaded
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+
+</html>

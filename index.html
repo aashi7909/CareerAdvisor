@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKILL BRIDGE - Smart Career Guidance Platform</title>
+   <link rel="stylesheet" href="home.css">
+    <body>
+
+    <div class="animated-bg"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-icon">📚</div>
+                EduPath
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#guidance">Guidance</a></li>
+                <li><a href="#colleges">Colleges</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <a href="#login" class="login-btn">Login</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="main-wrapper">
+            <!-- Hero Content -->
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span>🚀</span>
+                    AI-Powered Career Guidance
+                </div>
+                
+                <h1 class="hero-title">Choose Your Perfect Career Path</h1>
+                
+                <p class="hero-description">
+                    Get personalized guidance based on your education, marks, and career goals. 
+                    From stream selection to college recommendations - we've got you covered!
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">50K+</span>
+                        <span class="stat-label">Students Guided</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">1000+</span>
+                        <span class="stat-label">Colleges Listed</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">95%</span>
+                        <span class="stat-label">Success Rate</span>
+                    </div>
+                </div>
+
+                <div class="hero-features">
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Personalized stream selection after 10th</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>College recommendations based on marks</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Government vs Private college guidance</span>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✓</div>
+                        <span>Career-focused subject combinations</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Get Your Career Roadmap</h2>
+                    <p class="form-subtitle">Fill your details for personalized guidance</p>
+                </div>
+
+                <div id="message"></div>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Analyzing your profile...</p>
+                </div>
+
+                <form id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="firstName">First Name <span class="required">*</span></label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="lastName">Last Name <span class="required">*</span></label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="phone" name="phone" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="age">Age <span class="required">*</span></label>
+                            <input type="number" id="age" name="age" class="form-input" min="15" max="25" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="education">Recently Completed <span class="required">*</span></label>
+                        <select id="education" name="education" class="form-select" required>
+                            <option value="">Select what you just completed</option>
+                            <option value="10th">10th Class</option>
+                            <option value="12th">12th Class</option>
+                            <option value="diploma">Diploma</option>
+                            <option value="graduation">Graduation (Bachelor's)</option>
+                        </select>
+                    </div>
+
+                    <div id="streamSection" class="form-group dynamic-section">
+                        <label class="form-label" for="stream">Stream Selection <span class="required">*</span></label>
+                        <select id="stream" name="stream" class="form-select">
+                            <option value="">Choose your stream preference</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="marks">Marks/Percentage <span class="required">*</span></label>
+                            <input type="number" id="marks" name="marks" class="form-input" min="35" max="100" placeholder="Enter %" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="careerGoal">Career Goal <span class="required">*</span></label>
+                            <select id="careerGoal" name="careerGoal" class="form-select" required>
+                                <option value="">What do you want to become?</option>
+                                <option value="engineer">Engineer</option>
+                                <option value="doctor">Doctor</option>
+                                <option value="ca">Chartered Accountant</option>
+                                <option value="lawyer">Lawyer</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="business">Business Owner</option>
+                                <option value="government">Government Officer</option>
+                                <option value="not-sure">Not Sure - Help Me Decide</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="collegeType">College Preference <span class="required">*</span></label>
+                        <select id="collegeType" name="collegeType" class="form-select" required>
+                            <option value="">Choose your preference</option>
+                            <option value="government">Government College (Entrance Exam)</option>
+                            <option value="private">Private College</option>
+                            <option value="both">Both Government & Private</option>
+                            <option value="unsure">Need Guidance</option>
+                        </select>
+                    </div>
+ 
+                    <div class="form-group">
+                        <label class="form-label" for="location">Preferred Location</label>
+                        <input type="text" id="location" name="location" class="form-input" placeholder="City, State">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="budget">Education Budget</label>
+                        <select id="budget" name="budget" class="form-select">
+                            <option value="">Select budget range</option>
+                            <option value="0-2lakh">Up to ₹2 Lakh</option>
+                            <option value="2-5lakh">₹2 - ₹5 Lakh</option>
+                            <option value="5-10lakh">₹5 - ₹10 Lakh</option>
+                            <option value="10-20lakh">₹10 - ₹20 Lakh</option>
+                            <option value="20lakh+">Above ₹20 Lakh</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="additionalInfo">Additional Information</label>
+                        <textarea id="additionalInfo" name="additionalInfo" class="form-textarea form-input" placeholder="Any specific requirements, entrance exams you're preparing for, or questions..."></textarea>
+                    </div>
+
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="newsletter" name="newsletter" class="checkbox-input" checked>
+                        <label class="checkbox-label" for="newsletter">Send me updates about entrance exams, admission dates & career opportunities</label>
+                    </div>
+
+                    <div class="checkbox-wrapper">
+                        <input type="checkbox" id="terms" name="terms" class="checkbox-input" required>
+                        <label class="checkbox-label" for="terms">I agree to the <a href="#terms">Terms & Conditions</a> and <a href="#privacy">Privacy Policy</a> <span class="required">*</span></label>
+                    </div>
+
+                    <button type="submit" class="form-submit" id="submitBtn">Get My Career Roadmap 🚀</button>
+                </form>
+
+                <div class="form-footer">
+                    <p>Already have an account? <a href="#login">Sign in here</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose EduPath?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card-icon">🎯</div>
+                    <h3>Smart Recommendations</h3>
+                    <p>AI-powered suggestions based on your marks, interests, and career goals for the best fit.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">🏛️</div>
+                    <h3>Complete College Database</h3>
+                    <p>Comprehensive list of government and private colleges with admission criteria and fees.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">📈</div>
+                    <h3>Success Tracking</h3>
+                    <p>Monitor your academic progress and get timely guidance for entrance exam preparation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Dynamic form behavior based on education level
+        document.getElementById('education').addEventListener('change', function() {
+            const streamSection = document.getElementById('streamSection');
+            const streamSelect = document.getElementById('stream');
+            
+            if (this.value === '10th') {
+                streamSection.classList.add('visible');
+                streamSelect.required = true;
+                streamSelect.innerHTML = `
+                    <option value="">What stream do you want in 11th-12th?</option>
+                    <option value="science-pcm">Science (PCM) - For Engineering/IT</option>
+                    <option value="science-pcb">Science (PCB) - For Medical/Pharmacy</option>
+                    <option value="commerce">Commerce - For CA/Business/Banking</option>
+                    <option value="arts">Arts/Humanities - For Law/Teaching/Civil Services</option>
+                `;
+            } else if (this.value === '12th') {
+                streamSection.classList.add('visible');
+                streamSelect.required = true;
+                streamSelect.innerHTML = `
+                    <option value="">Your 12th stream was?</option>
+                    <option value="science-pcm">Science (PCM)</option>
+                    <option value="science-pcb">Science (PCB)</option>
+                    <option value="commerce">Commerce</option>
+                    <option value="arts">Arts/Humanities</option>
+                `;
+            } else {
+                streamSection.classList.remove('visible');
+                streamSelect.required = false;
+            }
+        });
+
+        // Career goal suggestions based on stream
+        document.getElementById('stream').addEventListener('change', function() {
+            const careerGoalSelect = document.getElementById('careerGoal');
+            const streamValue = this.value;
+            
+            let priorityOptions = [];
+            if (streamValue === 'science-pcm') {
+                priorityOptions = ['engineer', 'government', 'business', 'not-sure'];
+            } else if (streamValue === 'science-pcb') {
+                priorityOptions = ['doctor', 'engineer', 'teacher', 'not-sure'];
+            } else if (streamValue === 'commerce') {
+                priorityOptions = ['ca', 'business', 'government', 'not-sure'];
+            } else if (streamValue === 'arts') {
+                priorityOptions = ['lawyer', 'teacher', 'government', 'not-sure'];
+            }
+
+            // Update career options
+            const allOptions = {
+                'engineer': 'Engineer',
+                'doctor': 'Doctor',
+                'ca': 'Chartered Accountant',
+                'lawyer': 'Lawyer',
+                'teacher': 'Teacher',
+                'business': 'Business Owner',
+                'government': 'Government Officer',
+                'not-sure': 'Not Sure - Help Me Decide',
+                'other': 'Other'
+            };
+            
+            careerGoalSelect.innerHTML = '<option value="">What do you want to become?</option>';
+            
+                        // Add priority options first
+                        priorityOptions.forEach(option => {
+                            careerGoalSelect.innerHTML += `<option value="${option}">${allOptions[option]}</option>`;
+                        });
+            
+                        // Add remaining options
+                        Object.keys(allOptions).forEach(option => {
+                            if (!priorityOptions.includes(option)) {
+                                careerGoalSelect.innerHTML += `<option value="${option}">${allOptions[option]}</option>`;
+                            }
+                        });
+                    });
+                </script>
+            </body>
+            </html>
